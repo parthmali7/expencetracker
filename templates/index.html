@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spendly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="url(#bg)"/><path d="M7 14h14M14 7v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="14" cy="14" r="5" stroke="#fff" stroke-width="1.5" fill="none" opacity=".4"/><defs><linearGradient id="bg" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+      </div>
+      <span class="brand-name">Spendly</span>
+    </div>
+    <button class="icon-btn" id="sidebarClose">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <div class="month-nav">
+    <button class="mnav-btn" id="prevMonth">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <div class="month-info">
+      <span id="currentMonthLabel">May 2025</span>
+    </div>
+    <button class="mnav-btn" id="nextMonth">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-item active" data-page="dashboard">
+      <span class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </span>
+      <span>Dashboard</span>
+    </button>
+    <button class="nav-item" data-page="expenses">
+      <span class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      </span>
+      <span>Expenses</span>
+    </button>
+    <button class="nav-item" data-page="analytics">
+      <span class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><path d="M3 3v18h18"/><path d="m7 16 4-4 4 4 4-4"/></svg>
+      </span>
+      <span>Analytics</span>
+    </button>
+    <button class="nav-item" data-page="categories">
+      <span class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </span>
+      <span>Categories</span>
+    </button>
+  </nav>
+</aside>
+
+<!-- ═══ MAIN SHELL ═══ -->
+<div class="app-shell">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="icon-btn hamburger" id="menuToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="20" height="20"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+      <div class="page-heading">
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        <span class="page-sub" id="pageMonthSub"></span>
+      </div>
+    </div>
+    <button class="add-btn" id="openAddExpense">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><path d="M12 5v14M5 12h14"/></svg>
+      <span>Add Expense</span>
+    </button>
+  </header>
+
+  <div class="scroll-area">
+
+    <!-- ══ DASHBOARD ══ -->
+    <section class="page active" id="page-dashboard">
+
+      <div class="kpi-row">
+        <div class="kpi-hero">
+          <p class="kpi-label">Total Spent</p>
+          <h2 class="kpi-value" id="statTotal">₹0</h2>
+          <p class="kpi-sub" id="statMonth">this month</p>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill" id="kpiBarFill"></div></div>
+        </div>
+
+        <div class="kpi-cards">
+          <div class="kpi-card">
+            <div class="kpi-card-icon" style="--ic:#3b82f6;--ib:rgba(59,130,246,.12)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+            </div>
+            <div><div class="kpi-card-val" id="statCount">0</div><div class="kpi-card-lbl">Transactions</div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card-icon" style="--ic:#10b981;--ib:rgba(16,185,129,.12)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div><div class="kpi-card-val" id="statAvg">₹0</div><div class="kpi-card-lbl">Daily Avg</div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card-icon" style="--ic:#f59e0b;--ib:rgba(245,158,11,.12)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div><div class="kpi-card-val" id="statTop" style="font-size:14px;line-height:1.2">—</div><div class="kpi-card-lbl">Top Category</div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card-icon" style="--ic:#8b5cf6;--ib:rgba(139,92,246,.12)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div><div class="kpi-card-val" id="statTopAmt">₹0</div><div class="kpi-card-lbl">Top Amount</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-cols">
+        <div class="panel panel-wide">
+          <div class="panel-hd">
+            <span class="panel-title">Daily Spending</span>
+            <span class="panel-badge" id="dailySub"></span>
+          </div>
+          <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><span class="panel-title">Category Split</span></div>
+          <div class="donut-container">
+            <div class="donut-wrap">
+              <canvas id="donutChart"></canvas>
+              <div class="donut-label" id="donutLabel">
+                <span class="dl-pct">0%</span>
+                <span class="dl-name">Total</span>
+              </div>
+            </div>
+          </div>
+          <div id="donutLegend" class="d-legend"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-hd">
+          <span class="panel-title">Recent Transactions</span>
+          <button class="text-btn" data-page="expenses">View all →</button>
+        </div>
+        <div id="recentList" class="txn-list"></div>
+      </div>
+    </section>
+
+    <!-- ══ EXPENSES ══ -->
+    <section class="page" id="page-expenses">
+      <div class="toolbar">
+        <div class="search-box">
+          <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" class="search-inp" placeholder="Search transactions…"/>
+        </div>
+        <select id="filterCategory" class="filter-sel">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+      <div class="panel">
+        <div id="expensesList" class="txn-list"></div>
+        <div id="noExpenses" class="empty-state hidden">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="48" height="48" opacity=".3"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+          <p>No expenses found</p>
+          <span>Try a different filter or add a new expense</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ANALYTICS ══ -->
+    <section class="page" id="page-analytics">
+      <div class="an-row">
+        <div class="panel">
+          <div class="panel-hd"><span class="panel-title">Yearly Trend</span></div>
+          <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd"><span class="panel-title">Budget vs Spent</span></div>
+          <div id="budgetBars" class="budget-bars"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-hd"><span class="panel-title">Category Breakdown</span></div>
+        <div id="categoryTable" class="cat-breakdown"></div>
+      </div>
+    </section>
+
+    <!-- ══ CATEGORIES ══ -->
+    <section class="page" id="page-categories">
+      <div class="toolbar" style="justify-content:flex-end">
+        <button class="add-btn" id="openAddCategory">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><path d="M12 5v14M5 12h14"/></svg>
+          New Category
+        </button>
+      </div>
+      <div id="categoriesGrid" class="cat-grid"></div>
+    </section>
+
+  </div>
+</div>
+
+<!-- Sidebar overlay for mobile -->
+<div class="overlay-bg hidden" id="overlayBg"></div>
+
+<!-- ═══ EXPENSE MODAL ═══ -->
+<div class="overlay hidden" id="expenseModal">
+  <div class="modal">
+    <div class="modal-hd">
+      <h2 id="modalTitle">Add Expense</h2>
+      <button class="close-btn" id="closeExpenseModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="expenseForm">
+      <input type="hidden" id="expenseId"/>
+      <div class="field">
+        <label>What did you spend on?</label>
+        <input type="text" id="expTitle" placeholder="e.g. Swiggy dinner" autocomplete="off"/>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Amount</label>
+          <div class="inp-wrap">
+            <span class="inp-pre">₹</span>
+            <input type="number" id="expAmount" placeholder="0" min="0" step="1"/>
+          </div>
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="expDate"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <div id="catPicker" class="cat-chip-grid"></div>
+        <input type="hidden" id="expCategory"/>
+      </div>
+      <div class="field">
+        <label>Note <em>(optional)</em></label>
+        <textarea id="expNote" rows="2" placeholder="Extra details…"></textarea>
+      </div>
+      <div class="modal-ft">
+        <button type="button" class="btn-ghost" id="cancelExpense">Cancel</button>
+        <button type="submit" class="btn-primary">Save Expense</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ CATEGORY MODAL ═══ -->
+<div class="overlay hidden" id="categoryModal">
+  <div class="modal modal-sm">
+    <div class="modal-hd">
+      <h2 id="catModalTitle">New Category</h2>
+      <button class="close-btn" id="closeCategoryModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="categoryForm">
+      <input type="hidden" id="catId"/>
+      <div class="field"><label>Name</label><input type="text" id="catName" placeholder="e.g. Groceries"/></div>
+      <div class="field-row">
+        <div class="field">
+          <label>Icon</label>
+          <select id="catIconSelect">
+            <option value="food">🍽  Food & Dining</option>
+            <option value="transport">🚗  Transport</option>
+            <option value="shopping">🛍  Shopping</option>
+            <option value="entertainment">🎬  Entertainment</option>
+            <option value="health">💊  Health</option>
+            <option value="utilities">💡  Utilities</option>
+            <option value="education">📚  Education</option>
+            <option value="travel">✈️  Travel</option>
+            <option value="savings">🏦  Savings</option>
+            <option value="other">📦  Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Color</label>
+          <div class="swatch-row" id="colorSwatches"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Monthly Budget (₹)</label>
+        <div class="inp-wrap"><span class="inp-pre">₹</span><input type="number" id="catBudget" placeholder="5000" min="0"/></div>
+      </div>
+      <div class="modal-ft">
+        <button type="button" class="btn-ghost" id="cancelCategory">Cancel</button>
+        <button type="submit" class="btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
